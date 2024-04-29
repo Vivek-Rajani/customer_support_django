@@ -20,7 +20,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'python manage.py test'
+                bat 'C:\\Python39\\python.exe manage.py test'
             }
         }
 
