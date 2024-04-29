@@ -10,6 +10,7 @@ pipeline {
 
         stage('Install Requirements') {
             steps {
+                bat '@echo on'
                 bat 'pip install -r requirements.txt'
             }
         }
