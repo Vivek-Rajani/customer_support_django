@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     def tomcatContainerName = "cs_docker_tomcat_app_${BUILD_ID}"
-                    customImage.run('-p 8000:8000 -d --name ' + tomcatContainerName)
+                    customImage.run('-p 8080:8080 -d --name ' + tomcatContainerName)
                 }
             }
         }
