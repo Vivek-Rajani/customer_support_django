@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'comp314') {
-                        sudo docker.image('cs_docker_app_img:latest').push('latest')
+                        docker.image('cs_docker_app_img:latest').push('latest')
                     }
                 }
             }
@@ -32,8 +32,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sudo docker.image('cs_docker_app_img:latest').pull()
-                    sudo ocker.image('cs_docker_app_img:latest').run('-d -p 8000:8000 --name cs_docker_container')
+                    docker.image('cs_docker_app_img:latest').pull()
+                    docker.image('cs_docker_app_img:latest').run('-d -p 8000:8000 --name cs_docker_container')
                 }
             }
         }
