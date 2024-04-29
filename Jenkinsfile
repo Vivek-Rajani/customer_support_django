@@ -8,10 +8,11 @@ pipeline {
             }
         }
 
-        stage('Install Requirements') {
+        stage('Build Docker Image') {
             steps {
-                bat '@echo on'
-                bat 'pip install -r requirements.txt'
+                script {
+                    docker.build('cs_docker_app_img:latest', '.')
+                }
             }
         }
 
@@ -20,28 +21,33 @@ pipeline {
                 bat 'python manage.py test'
             }
         }
-        
-        stage('Build Docker Image') {
+
+        stage('Push Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build('cs_docker_app_img', '.')
+                    docker.withRegistry('', 'comp314') {
+                        docker.image('cs_docker_app_img:latest').push('latest')
+                    }
                 }
             }
         }
 
+
         stage('Deploy') {
             steps {
                 script {
-                    bat 'docker image ls'
-                    bat 'docker run -d -p 8000:8000 cs_docker_app_img'
+                    docker.image('cs_docker_app_img:latest').pull()
+                    docker.image('cs_docker_app_img:latest').run('-d -p 8000:8000 --name cs_docker_container')
                 }
             }
         }
     }
-    
+
     post {
         always {
-            bat 'docker system prune -af'
+            script {
+                //Temp_Ignore --Vivek
+            }
         }
     }
 }
