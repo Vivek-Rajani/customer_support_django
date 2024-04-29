@@ -10,13 +10,13 @@ pipeline {
 
         stage('Install Requirements') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'python manage.py test'
+                bat 'python manage.py test'
             }
         }
         
@@ -31,8 +31,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker image ls'
-                    sh 'docker run -d -p 8000:8000 cs_docker_app_img'
+                    bat 'docker image ls'
+                    bat 'docker run -d -p 8000:8000 cs_docker_app_img'
                 }
             }
         }
@@ -40,7 +40,7 @@ pipeline {
     
     post {
         always {
-            sh 'docker system prune -af'
+            bat 'docker system prune -af'
         }
     }
 }
