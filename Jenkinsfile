@@ -20,10 +20,8 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'comp314', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    bat "echo %PASSWORD% | docker login -u %USERNAME% --password-stdin"
-                    bat 'docker push cs_docker_app_img:latest'
-                }
+                bat "docker login"
+                bat 'docker push cs_docker_app_img:latest'
             }
         }
 
