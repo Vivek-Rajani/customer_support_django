@@ -31,8 +31,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    docker.image('cs_docker_app_img:latest').pull()
-                    docker.image('cs_docker_app_img:latest').run('-d -p 8000:8000 --name cs_docker_container')
+                    customImage.pull()
+                    customImage.run('-d -p 8000:8000 --name cs_docker_container')
                 }
             }
         }
