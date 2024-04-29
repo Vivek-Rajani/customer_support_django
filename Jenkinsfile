@@ -47,9 +47,6 @@ pipeline {
 
     post {
         always {
-            script {
-                //Temp_Ignore --Vivek
-            }
         }
     }
 }
