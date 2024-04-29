@@ -28,11 +28,10 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Tomcat Deployment of Docker Container') {
             steps {
                 script {
-                    customImage.pull()
-                    customImage.run('-d -p 8000:8000 --name cs_docker_container')
+                    customImage.run('-p 8081:8081 -d --name cs_docker_tomcat_app')
                 }
             }
         }
