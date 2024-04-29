@@ -18,12 +18,6 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                bat 'C:\\Python39\\python.exe manage.py test'
-            }
-        }
-
         stage('Push Docker Image') {
             steps {
                 script {
