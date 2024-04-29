@@ -20,7 +20,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker login -u Vivek100 -p comp314passwordtemp'
+                echo "comp314passwordtemp" | docker login -u Vivek100 --password-stdin
                 bat 'docker push cs_docker_app_img:latest'
             }
         }
