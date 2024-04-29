@@ -2,12 +2,22 @@ pipeline {
     agent any
 
     stages {
+        stage('Install Docker') {
+            steps {
+                script {
+                    sh 'sudo apt update'
+                    sh 'sudo apt install -y docker.io'
+                    sh 'sudo usermod -aG docker jenkins'
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/Vivek-Rajani/customer_support_django'
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -24,7 +34,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always {
             sh 'docker system prune -af'
