@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build('cs_docker_app_img')
+                    dockerImage = docker.build('cs_docker_app_img', '-f /app/customer_support_project/dockerfile .')
                 }
             }
         }
@@ -19,9 +19,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    dockerImage.inside('-p 8000:8000') {
-                        sh 'docker run -d -p 8000:8000 cd_docker_app_img'
-                    }
+                    sh 'docker image ls'
+                    sh 'docker run -d -p 8000:8000 cs_docker_app_img'
                 }
             }
         }
