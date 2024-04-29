@@ -18,10 +18,20 @@ pipeline {
             }
         }
 
+        stage('Tag Docker Image') {
+            steps {
+                script {
+                    docker.image('cs_docker_app_img:latest').tag "Vivek100/cs_docker_app_img:latest"
+                }
+            }
+        }
+
         stage('Push Docker Image') {
             steps {
-                withDockerRegistry([ credentialsId: "comp314", url: "https://index.docker.io/v1/" ]) {
-                    bat "docker push cs_docker_app_img:latest"
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'comp314') {
+                        docker.image('Vivek100/cs_docker_app_img:latest').push('latest')
+                    }
                 }
             }
         }
