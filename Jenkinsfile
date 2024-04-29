@@ -20,8 +20,11 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                bat "docker login"
-                bat 'docker push cs_docker_app_img:latest'
+                script {
+                    docker.withRegistry('', 'comp314') {
+                        docker.image('cs_docker_app_img:latest').push('latest')
+                    }
+                }
             }
         }
 
