@@ -31,7 +31,8 @@ pipeline {
         stage('Tomcat Deployment of Docker Container') {
             steps {
                 script {
-                    customImage.run('-p 8081:8081 -d --name cs_docker_tomcat_app')
+                    def tomcatContainerName = "cs_docker_tomcat_app_${BUILD_ID}"
+                    customImage.run('-p 8081:8000 -d --name ' + tomcatContainerName)
                 }
             }
         }
