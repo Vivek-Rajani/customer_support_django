@@ -1,5 +1,3 @@
-#!groovy
-
 pipeline {
     agent any
 
@@ -13,15 +11,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('cs_docker_app_img:latest', '.')
-                }
-            }
-        }
-
-        stage('Tag Docker Image') {
-            steps {
-                script {
-                    docker.image('cs_docker_app_img:latest').tag "Vivek100/cs_docker_app_img:latest"
+                    def dockerfile = 'dockerfile'
+                    def imageTag = "vivek100/cs_docker_app_img" 
+                    customImage = docker.build(imageTag, "-f ${dockerfile} ./")
                 }
             }
         }
@@ -29,13 +21,12 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'comp314') {
-                        docker.image('Vivek100/cs_docker_app_img:latest').push('latest')
+                    docker.withRegistry('', 'comp314') {
+                        customImage.push()
                     }
                 }
             }
         }
-
 
         stage('Deploy') {
             steps {
