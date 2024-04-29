@@ -17,16 +17,17 @@ pipeline {
                 }
             }
         }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('', 'comp314') {
-                        docker.image('cs_docker_app_img:latest').push('latest')
-                    }
-                }
+stage('Push Docker Image') {
+    steps {
+        script {
+            echo "comp314passwordtemp" | docker login -u Vivek100 --password-stdin
+            
+            docker.withRegistry('', 'comp314') {
+                docker.image('cs_docker_app_img:latest').push('latest')
             }
         }
+    }
+}
 
 
         stage('Deploy') {
