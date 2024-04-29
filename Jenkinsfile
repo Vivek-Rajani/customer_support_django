@@ -20,10 +20,8 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('', 'comp314') {
-                        docker.image('cs_docker_app_img:latest').push('latest')
-                    }
+                withDockerRegistry([ credentialsId: "comp314", url: "https://index.docker.io/v1/" ]) {
+                    bat "docker push cs_docker_app_img:latest"
                 }
             }
         }
